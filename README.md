@@ -26,6 +26,16 @@ objects; parks, playgrounds, gardens; bunkers; drinking water, parking, shelters
 charging stations (nodes); parking areas. A way or relation's position is the middle of its bounding
 box, as Overpass's `center`.
 
+## Sizes (first build, 31 Oct 2026, Czech Republic)
+
+| | Count | Files | Total (compressed) | Per file: median / 90 % / largest |
+|---|---|---|---|---|
+| Places | 487,958 | 62,003 | 17.8 MB | 132 B / 522 B / 47 KB (Prague centre) |
+| Details | | 62,003 | 27.5 MB | 217 B / 850 B / 71 KB |
+| Buildings | 5,141,030 | 80,193 | 137 MB | 569 B / 4.5 KB / 42 KB |
+
+The conversion took 10.5 minutes and ~3.3 GB of RAM (2 cores).
+
 ## Building
 
 ```

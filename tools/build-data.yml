@@ -31,7 +31,10 @@ jobs:
       - name: Tools
         run: pip install osmium
       - name: Download the extract
-        run: curl -fsSL -o cz.osm.pbf https://download.geofabrik.de/europe/czech-republic-latest.osm.pbf && ls -l cz.osm.pbf
+        run: |
+          curl -fsSL -o cz.osm.pbf https://download.geofabrik.de/europe/czech-republic-latest.osm.pbf \
+            || curl -fsSL -o cz.osm.pbf https://download.openstreetmap.fr/extracts/europe/czech_republic-latest.osm.pbf
+          ls -l cz.osm.pbf
       - name: Convert
         run: python tools/convert.py cz.osm.pbf site
       - name: Site files
