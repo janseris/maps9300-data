@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Mapy 9300 data: OpenStreetMap places and buildings as small static files for the Nokia 9300.
+"""Maps 9300 data: OpenStreetMap places and buildings as small static files for the Nokia 9300.
 
 Reads an OSM extract (.osm.pbf, e.g. Geofabrik's czech-republic-latest.osm.pbf) and writes, per
 zoom 15 cell (the same cells the app already uses for places, ~1.2 x 0.8 km here):

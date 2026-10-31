@@ -1,6 +1,6 @@
-# Mapy 9300 data
+# Maps 9300 data
 
-OpenStreetMap places and buildings for **Mapy 9300 native** (a map app for the Nokia 9300), cut into
+OpenStreetMap places and buildings for **Maps 9300** (a map app for the Nokia 9300), cut into
 small static files so the phone can download only the areas it shows, with no live query server.
 Built monthly by GitHub Actions from [Geofabrik](https://download.geofabrik.de/)'s Czech Republic
 extract and published on GitHub Pages.
