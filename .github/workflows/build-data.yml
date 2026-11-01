@@ -6,6 +6,11 @@ on:
   schedule:
     - cron: "17 3 2 * *"      # the 2nd of every month, 03:17 UTC
   workflow_dispatch:
+  push:                       # also when the converter or this workflow changes
+    branches: [main]
+    paths:
+      - "tools/**"
+      - ".github/workflows/**"
 
 permissions:
   contents: read
