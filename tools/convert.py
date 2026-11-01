@@ -21,6 +21,7 @@ import struct
 import sys
 import time
 import zlib
+from array import array
 from collections import defaultdict
 
 import osmium
@@ -146,7 +147,12 @@ class Collector(osmium.SimpleHandler):
         lat = sum(p[0] for p in ring) / len(ring)
         lon = sum(p[1] for p in ring) / len(ring)
         h, levels = height_of(tags)
-        self.buildings[cell_of(lat, lon)].append((h, levels, ring))
+        # compact: lat/lon as 1e-7 degree integers (a country has millions of buildings)
+        pts = array("i")
+        for la, lo in ring:
+            pts.append(int(round(la * 1e7)))
+            pts.append(int(round(lo * 1e7)))
+        self.buildings[cell_of(lat, lon)].append((h, levels, pts))
         self.n_buildings += 1
 
     def node(self, n):
@@ -211,13 +217,17 @@ def building_blob(cell, items):
     west, north, east, south = cell_bounds(*cell)
     out = bytearray(b"MB1\0")
     out += struct.pack("<I", len(items))
-    for h, levels, ring in items:
+    for h, levels, flat in items:
         pts = []
-        for lat, lon in ring:
+        for i in range(0, len(flat), 2):
+            lat, lon = flat[i] * 1e-7, flat[i + 1] * 1e-7
             x = int(round((lon - west) / (east - west) * 65535))
             y = int(round((north - lat) / (north - south) * 65535))
             pts.append((x, y))
-        out += struct.pack("<HBH", min(int(round(h * 10)), 65535), min(levels, 255), len(pts))
+        if not (h == h) or h < 0 or h > 6500:       # NaN, negative or nonsense: unknown
+            h = 0.0
+        pts = pts[:65535]
+        out += struct.pack("<HBH", int(round(h * 10)), max(0, min(levels, 255)), len(pts))
         x0, y0 = pts[0]
         out += struct.pack("<ii", x0, y0)
         px, py = x0, y0
